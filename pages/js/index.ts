@@ -1,6 +1,11 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { audioSphear, dataArray, analyser, updateVertices } from "./audioObject";
+import {
+  audioSphear,
+  dataArray,
+  analyser,
+  updateVertices,
+} from "./audioObject";
 import { sky } from "./sky";
 
 // pass in a ref to the canvas element
@@ -15,7 +20,7 @@ export const initScene = (canvasRef: { value: HTMLCanvasElement }) => {
     10000000
   );
 
-  camera.position.z = 45;
+  camera.position.z = 41;
 
   // renderer config
   const renderer = new THREE.WebGLRenderer({
@@ -28,15 +33,12 @@ export const initScene = (canvasRef: { value: HTMLCanvasElement }) => {
 
   // orbitcontrols
   const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enablePan = false;
 
   //lights
   const light = new THREE.AmbientLight(0xffffff, 1);
   light.position.set(0, 0.5, 1);
   scene.add(light);
-
-  // helpers
-  const axesHelper = new THREE.AxesHelper(500);
-  // scene.add(axesHelper);
 
   // code
   scene.add(audioSphear);
@@ -44,9 +46,8 @@ export const initScene = (canvasRef: { value: HTMLCanvasElement }) => {
   sky.rotation.y += 1.8;
 
   // main game loop
-  const animate = (time:number) => {
+  const animate = () => {
     // update the audio freq data
-    
 
     if (dataArray) {
       analyser.getByteFrequencyData(dataArray);
@@ -54,6 +55,7 @@ export const initScene = (canvasRef: { value: HTMLCanvasElement }) => {
     }
     audioSphear.rotation.y += 0.0007;
     sky.rotation.y += 0.00009;
+
     // renderiong the scene and camera
     renderer.render(scene, camera);
     requestAnimationFrame(animate);
@@ -62,7 +64,6 @@ export const initScene = (canvasRef: { value: HTMLCanvasElement }) => {
   requestAnimationFrame(animate);
 
   // resize canvas on browser resize
-
   window.addEventListener("resize", () => {
     renderer.setSize(innerWidth, innerHeight);
     camera.aspect = innerWidth / innerHeight;

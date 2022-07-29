@@ -1,8 +1,6 @@
 import * as THREE from "three";
 
 const materialArray = [];
-// const fileName = "sleepyhollow";
-// const fileName = "yonder";
 const fileName = "tropic";
 const texture_ft = new THREE.TextureLoader().load(`assets/sky/${fileName}_ft.jpg`);
 const texture_bk = new THREE.TextureLoader().load(`assets/sky/${fileName}_bk.jpg`);

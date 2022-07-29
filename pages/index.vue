@@ -2,11 +2,24 @@
 import { initScene } from "./js/index"
 import { audioContext, audio } from "./js/audioObject"
 
+// set the title and tab icon
+useHead({
+    title: 'yeezy',
+    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
+    charset: 'utf-8',
+    meta: [
+        { name: 'description', content: '3d threejs audio visualizer' }
+    ],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/assets/kanye.jpeg' }],
+})
+
+
+// declaring refs for the html elements for vue to interact with it
 const canvasRef = ref(null);
 const playing = ref(false);
 const volume = ref(60);
 
-
+// when the play btn is clicked
 const play = () => {
     if (audioContext.state === 'suspended') {
         audioContext.resume();
@@ -22,9 +35,9 @@ const play = () => {
 }
 
 onMounted(() => {
-    initScene(canvasRef);
+    initScene(canvasRef); // initialise the scene
+    // watch for volume change
     watch(volume, (newvolume) => {
-        console.log(newvolume);
         audio.volume = (newvolume / 100);
     });
 });
@@ -33,11 +46,15 @@ onMounted(() => {
 </script>
 
 <template>
-    <canvas class="z-0" ref="canvasRef"></canvas>
-    <button class="absolute bottom-16 text-5xl uppercase left-1/2 -translate-x-1/2 text-white" @click="play()">{{ !playing ? 'Play' : 'Pause'
-    }}</button>
-    <div class="absolute bottom-20 right-10">
-        <input type="range" min="0" max="100" v-model="volume" class="range range-sm w-96" />
+    <canvas class="z-0 transform-gpu" ref="canvasRef"></canvas>
+    <button
+        class="absolute bottom-14 px-6 pt-2 pb-3 text-5xl uppercase left-1/2 -translate-x-1/2 border-solid border-2 text-white shadow-xl active:shadow-inner"
+        @click="play()">{{ !playing ? 'Play' : 'Pause'
+        }}</button>
+    <div class="absolute bottom-14 right-0 -mr-20 flex flex-col-reverse scale-105">
+        <font-awesome-icon icon="fa-solid fa-volume-high" class="pt-28 text-primary" />
+        <input type="range" min="0" max="100" v-model="volume"
+            class="scale-50 rotate-270 range range-sm w-96 range-primary bg-black bg-opacity-20 !outline !outline-1 !outline-gray-900" />
     </div>
 </template>
 
@@ -49,10 +66,5 @@ body {
     margin: 0;
     font-family: 'Exo 2', 'Space Mono';
     overflow: hidden;
-}
-
-input {
-    transform: rotate(270deg) scale(0.6);
-    color: aqua !important;
 }
 </style>
