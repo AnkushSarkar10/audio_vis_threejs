@@ -1,18 +1,14 @@
 <script setup lang='ts'>
-import { initScene } from "./js/index"
-import { audioContext, audio } from "./js/audioObject"
+import { initScene } from "./js/index.js"
+import { audioContext, audio } from "./js/audioObject.js"
 
 // set the title and tab icon
 useHead({
     title: 'yeezy',
-    viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-    charset: 'utf-8',
-    meta: [
-        { name: 'description', content: '3d threejs audio visualizer' }
-    ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/assets/kanye.jpeg' }],
 })
 
+console.log(initScene);
 
 // declaring refs for the html elements for vue to interact with it
 const canvasRef = ref(null);

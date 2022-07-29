@@ -6,7 +6,7 @@ import {
   analyser,
   updateVertices,
 } from "./audioObject";
-import { sky } from "./sky";
+import { sky } from "./sky.js";
 
 // pass in a ref to the canvas element
 export const initScene = (canvasRef: { value: HTMLCanvasElement }) => {
