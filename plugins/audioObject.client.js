@@ -1,4 +1,5 @@
-import * as THREE from "three";
+// import * as THREE from "three";
+import { SphereGeometry, TextureLoader, PointsMaterial, Points } from "three";
 
 // audio stuff
 
@@ -19,19 +20,19 @@ if (process.client) {
 
   dataArray = new Uint8Array(analyser.frequencyBinCount); // this contains the audio freq data
 
-  const geometry = new THREE.SphereGeometry(15, 68, 75);
+  const geometry = new SphereGeometry(15, 68, 75);
   const originalArr = [...geometry.attributes.position.array];
 
-  const texture = new THREE.TextureLoader().load(`/kanye.jpeg`);
+  const texture = new TextureLoader().load(`/kanye.jpeg`);
 
-  const material = new THREE.PointsMaterial({
+  const material = new PointsMaterial({
     map: texture,
     size: 0.4,
     transparent: true,
   });
 
   // make the sphere
-  audioSphear = new THREE.Points(geometry, material);
+  audioSphear = new Points(geometry, material);
 
   // the main fdunction for the audio stuff
   updateVertices = (dataArr) => {
@@ -75,7 +76,7 @@ export default defineNuxtPlugin(() => {
   return {
     provide: {
       audio: audio,
-      audioContext: audioContext
-    }
-  }
-})
+      audioContext: audioContext,
+    },
+  };
+});

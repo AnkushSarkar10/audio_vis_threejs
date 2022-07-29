@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import { Scene, PerspectiveCamera, WebGLRenderer, AmbientLight } from "three";
 import Stats from "stats.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import {
@@ -9,16 +9,26 @@ import {
 } from "./audioObject.client.js";
 import { sky } from "./sky.client.js";
 
-
-(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//cdn.jsdelivr.net/gh/Kevnz/stats.js/build/stats.min.js';document.head.appendChild(script);})()
-
+(function () {
+  var script = document.createElement("script");
+  script.onload = function () {
+    var stats = new Stats();
+    document.body.appendChild(stats.dom);
+    requestAnimationFrame(function loop() {
+      stats.update();
+      requestAnimationFrame(loop);
+    });
+  };
+  script.src = "//cdn.jsdelivr.net/gh/Kevnz/stats.js/build/stats.min.js";
+  document.head.appendChild(script);
+})();
 
 // pass in a ref to the canvas element
 export const initScene = (canvasRef) => {
   // scene init
-  const scene = new THREE.Scene();
+  const scene = new Scene();
   // camera init
-  const camera = new THREE.PerspectiveCamera(
+  const camera = new PerspectiveCamera(
     75,
     innerWidth / innerHeight,
     0.1,
@@ -28,7 +38,7 @@ export const initScene = (canvasRef) => {
   camera.position.z = 41;
 
   // renderer config
-  const renderer = new THREE.WebGLRenderer({
+  const renderer = new WebGLRenderer({
     canvas: canvasRef.value,
     antialias: true,
   });
@@ -41,7 +51,7 @@ export const initScene = (canvasRef) => {
   controls.enablePan = false;
 
   //lights
-  const light = new THREE.AmbientLight(0xffffff, 1);
+  const light = new AmbientLight(0xffffff, 1);
   light.position.set(0, 0.5, 1);
   scene.add(light);
 
@@ -63,25 +73,25 @@ export const initScene = (canvasRef) => {
 
     // renderiong the scene and camera
     renderer.render(scene, camera);
- 
+
     requestAnimationFrame(animate);
   };
 
   requestAnimationFrame(animate);
 
   // resize canvas on browser resize
-  if (process.client) window.addEventListener("resize", () => {
-    renderer.setSize(innerWidth, innerHeight);
-    camera.aspect = innerWidth / innerHeight;
-    camera.updateProjectionMatrix();
-  });
+  if (process.client)
+    window.addEventListener("resize", () => {
+      renderer.setSize(innerWidth, innerHeight);
+      camera.aspect = innerWidth / innerHeight;
+      camera.updateProjectionMatrix();
+    });
 };
 
 export default defineNuxtPlugin(() => {
   return {
     provide: {
       initScene: initScene,
-
-    }
-  }
-})
+    },
+  };
+});

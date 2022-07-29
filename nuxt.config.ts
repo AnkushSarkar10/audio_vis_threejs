@@ -9,7 +9,6 @@ export default defineNuxtConfig({
       "@fortawesome/fontawesome-svg-core",
       "@fortawesome/free-solid-svg-icons",
     ],
-    
   },
   css: ["@fortawesome/fontawesome-svg-core/styles.css"],
   modules: ["@nuxtjs/tailwindcss"],
