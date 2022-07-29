@@ -1,9 +1,6 @@
 import { defineNuxtConfig } from "nuxt";
 
 export default defineNuxtConfig({
-  head: {
-    title: "my first nuxt proj - main page",
-  },
   build: {
     transpile: [
       "@fortawesome/vue-fontawesome",
@@ -14,4 +11,5 @@ export default defineNuxtConfig({
   css: ["@fortawesome/fontawesome-svg-core/styles.css"],
   modules: ["@nuxtjs/tailwindcss"],
   ssr: false,
+  target: 'static'
 });
