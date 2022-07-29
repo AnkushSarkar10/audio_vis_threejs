@@ -5,11 +5,11 @@ import {
   dataArray,
   analyser,
   updateVertices,
-} from "./audioObject";
-import { sky } from "./sky.js";
+} from "./audioObject.client.js";
+import { sky } from "./sky.client.js";
 
 // pass in a ref to the canvas element
-export const initScene = (canvasRef: { value: HTMLCanvasElement }) => {
+export const initScene = (canvasRef) => {
   // scene init
   const scene = new THREE.Scene();
   // camera init
@@ -64,9 +64,17 @@ export const initScene = (canvasRef: { value: HTMLCanvasElement }) => {
   requestAnimationFrame(animate);
 
   // resize canvas on browser resize
-  window.addEventListener("resize", () => {
+  if (process.client) window.addEventListener("resize", () => {
     renderer.setSize(innerWidth, innerHeight);
     camera.aspect = innerWidth / innerHeight;
     camera.updateProjectionMatrix();
   });
 };
+
+export default defineNuxtPlugin(() => {
+  return {
+    provide: {
+      initScene: initScene
+    }
+  }
+})

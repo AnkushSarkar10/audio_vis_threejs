@@ -1,14 +1,13 @@
 <script setup lang='ts'>
-import { initScene } from "./js/index.js"
-import { audioContext, audio } from "./js/audioObject.js"
+const { $initScene } = useNuxtApp();
+const { $audioContext } = useNuxtApp();
+const { $audio } = useNuxtApp();
 
 // set the title and tab icon
 useHead({
     title: 'yeezy',
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/assets/kanye.jpeg' }],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/kanye.jpeg' }],
 })
-
-console.log(initScene);
 
 // declaring refs for the html elements for vue to interact with it
 const canvasRef = ref(null);
@@ -17,32 +16,38 @@ const volume = ref(60);
 
 // when the play btn is clicked
 const play = () => {
-    if (audioContext.state === 'suspended') {
-        audioContext.resume();
+    if ($audioContext.state === 'suspended') {
+        $audioContext.resume();
     }
     if (playing.value === false) {
-        audio.play();
-        audio.volume = (volume.value / 100);
+        $audio.play();
+        $audio.volume = (volume.value / 100);
         playing.value = true;
     } else if (playing.value === true) {
-        audio.pause();
+        $audio.pause();
         playing.value = false;
     }
 }
 
 onMounted(() => {
-    initScene(canvasRef); // initialise the scene
+    $initScene(canvasRef); // initialise the scene
     // watch for volume change
     watch(volume, (newvolume) => {
-        audio.volume = (newvolume / 100);
+        $audio.volume = (newvolume / 100);
     });
-});
 
+    $audio.addEventListener('ended', function _next() {
+        playing.value = false;
+    });
+
+});
 
 </script>
 
 <template>
-    <canvas class="z-0 transform-gpu" ref="canvasRef"></canvas>
+    <transition>
+        <canvas class="z-0 transform-gpu" ref="canvasRef"></canvas>
+    </transition>
     <button
         class="absolute bottom-14 px-6 pt-2 pb-3 text-5xl uppercase left-1/2 -translate-x-1/2 border-solid border-2 text-white shadow-xl active:shadow-inner"
         @click="play()">{{ !playing ? 'Play' : 'Pause'
