@@ -3,6 +3,7 @@ const { $initScene } = useNuxtApp();
 const { $audioContext } = useNuxtApp();
 const { $audio } = useNuxtApp();
 
+
 // set the title and tab icon
 useHead({
     title: 'yeezy',

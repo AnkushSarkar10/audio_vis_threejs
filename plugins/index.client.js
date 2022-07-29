@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import Stats from "stats.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import {
   audioSphear,
@@ -7,6 +8,10 @@ import {
   updateVertices,
 } from "./audioObject.client.js";
 import { sky } from "./sky.client.js";
+
+
+(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//cdn.jsdelivr.net/gh/Kevnz/stats.js/build/stats.min.js';document.head.appendChild(script);})()
+
 
 // pass in a ref to the canvas element
 export const initScene = (canvasRef) => {
@@ -58,6 +63,7 @@ export const initScene = (canvasRef) => {
 
     // renderiong the scene and camera
     renderer.render(scene, camera);
+ 
     requestAnimationFrame(animate);
   };
 
@@ -74,7 +80,8 @@ export const initScene = (canvasRef) => {
 export default defineNuxtPlugin(() => {
   return {
     provide: {
-      initScene: initScene
+      initScene: initScene,
+
     }
   }
 })

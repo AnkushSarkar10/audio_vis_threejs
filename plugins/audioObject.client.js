@@ -24,8 +24,6 @@ if (process.client) {
 
   const texture = new THREE.TextureLoader().load(`/kanye.jpeg`);
 
-  console.log(texture);
-
   const material = new THREE.PointsMaterial({
     map: texture,
     size: 0.4,

@@ -20,6 +20,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.1",
     "@types/three": "^0.142.0",
     "daisyui": "^2.20.0",
+    "stats.js": "^0.17.0",
     "three": "^0.142.0"
   }
 }
