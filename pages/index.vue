@@ -4,6 +4,7 @@ import { audioContext, audio } from "./js/audioObject"
 
 const canvasRef = ref(null);
 const playing = ref(false);
+const volume = ref(60);
 
 
 const play = () => {
@@ -12,6 +13,7 @@ const play = () => {
     }
     if (playing.value === false) {
         audio.play();
+        audio.volume = (volume.value / 100);
         playing.value = true;
     } else if (playing.value === true) {
         audio.pause();
@@ -21,7 +23,10 @@ const play = () => {
 
 onMounted(() => {
     initScene(canvasRef);
-
+    watch(volume, (newvolume) => {
+        console.log(newvolume);
+        audio.volume = (newvolume / 100);
+    });
 });
 
 
@@ -29,11 +34,11 @@ onMounted(() => {
 
 <template>
     <canvas class="z-0" ref="canvasRef"></canvas>
-    <button class="absolute bottom-7 left-12 text-3xl text-white" @click="play()">Play/Pause</button>
-    <div class="absolute bottom-16 left-12 text-sm text-white">
-        {{ }}
+    <button class="absolute bottom-16 text-5xl uppercase left-1/2 -translate-x-1/2 text-white" @click="play()">{{ !playing ? 'Play' : 'Pause'
+    }}</button>
+    <div class="absolute bottom-20 right-10">
+        <input type="range" min="0" max="100" v-model="volume" class="range range-sm w-96" />
     </div>
-    <!-- <audio class=" absolute bottom-7 right-4" id="myAudio" ref="myAudio" src="assets/allMine.mp3" controls loop></audio> -->
 </template>
 
 <style>
@@ -44,5 +49,10 @@ body {
     margin: 0;
     font-family: 'Exo 2', 'Space Mono';
     overflow: hidden;
+}
+
+input {
+    transform: rotate(270deg) scale(0.6);
+    color: aqua !important;
 }
 </style>
