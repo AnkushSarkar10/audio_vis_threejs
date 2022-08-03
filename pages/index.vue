@@ -40,7 +40,6 @@ onMounted(() => {
     $audio.addEventListener('ended', function _next() {
         playing.value = false;
     });
-
 });
 
 </script>
@@ -58,6 +57,7 @@ onMounted(() => {
         <input type="range" min="0" max="100" v-model="volume"
             class="scale-50 rotate-270 range range-sm w-96 range-primary bg-black bg-opacity-20 !outline !outline-1 !outline-gray-900" />
     </div>
+    <a class="ghub" href="https://github.com/AnkushSarkar10/audio_vis_threejs" target="_blank"><font-awesome-icon icon="fa-brands fa-github" class="absolute bottom-10 left-10 hover:cursor-pointer"/></a>
 </template>
 
 <style>
@@ -68,5 +68,8 @@ body {
     margin: 0;
     font-family: 'Exo 2', 'Space Mono';
     overflow: hidden;
+}
+.fa-github {
+    transform: scale(4);
 }
 </style>
